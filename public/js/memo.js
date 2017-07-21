@@ -13,8 +13,8 @@ button.addEventListener("click", function () {
 
     //update other clients -
     var socket = io("http://192.168.0.103:8256");
-    socket.emit("join");
-    Console.log("join done");
+    // socket.emit("join");
+     Console.log("join done");
 });
 
 ws.onmessage = function (event) {

@@ -8,6 +8,7 @@ $(document).ready(function(){
     socket.on('reload', function (msg) {
         location.reload(true);
         //alert("reloaded.");
+        console.log("reloaded");
     });
 
     $(window).on('beforeunload', function(){

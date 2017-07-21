@@ -35,8 +35,6 @@ app.ws('/', function (ws, req) {
     });
 });
 
-//fs.watchFile("/public/notes.html");
-
 app.use(express.static('public'));
 
 var server = app.listen(8256);
@@ -46,9 +44,17 @@ const io = require('socket.io').listen(server);
 //server.listen(8256);
 
 
-io.on('connection', function (socket) {
-    socket.on('join', function(data) {
-        //console.log(data + "[server]");
-        io.sockets.emit('reload', 'Hello from server');
-    });
+// io.on('connection', function (socket) {
+//     socket.on('join', function(data) {
+//         //console.log(data + "[server]");
+//         io.sockets.emit('reload', 'from io.on()');
+//     });
+// });
+
+fs.watchFile('public/notes.html', { persistent: true, interval: 500 }, function (curr, prev) {
+    io.sockets.emit('reload', 'from watchFile()');
+    console.log("notes.html changed.");
 });
+
+// var watch = require('node-watch');
+// watch('public/', );
