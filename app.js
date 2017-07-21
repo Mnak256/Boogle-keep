@@ -48,7 +48,7 @@ const io = require('socket.io').listen(server);
 
 io.on('connection', function (socket) {
     socket.on('join', function(data) {
-        console.log(data + "[server]");
+        //console.log(data + "[server]");
         io.sockets.emit('reload', 'Hello from server');
     });
 });
