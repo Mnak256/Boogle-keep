@@ -8,7 +8,6 @@ button.addEventListener("click", function () {
     var noteQuery = "?title=" + title.value + "&note=" + note.value;
     
     ws.send(noteQuery);
-    alert(noteQuery);
     
 });
 
