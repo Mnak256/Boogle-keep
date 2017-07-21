@@ -7,8 +7,14 @@ button.addEventListener("click", function () {
     var note = document.getElementById("note-text");
     var noteQuery = "?title=" + title.value + "&note=" + note.value;
     
-    ws.send(noteQuery);
     
+
+    ws.send(noteQuery);
+
+    //update other clients -
+    var socket = io("http://192.168.0.103:8256");
+    socket.emit("join");
+    //alert("join done");
 });
 
 ws.onmessage = function (event) {
