@@ -19,7 +19,7 @@ var expressWs = require('express-ws')(app);
     
 // });
 
-app.ws('/', function (ws, req) {
+/*app.ws('/', function (ws, req) {
     ws.on("message", function(noteQuery) {
         var adr = "http://example.com/index.html" + noteQuery;
         var q = url.parse(adr, true);
@@ -33,7 +33,7 @@ app.ws('/', function (ws, req) {
             }
         });
     });
-});
+});*/
 
 app.use(express.static('public'));
 
@@ -44,17 +44,30 @@ const io = require('socket.io').listen(server);
 //server.listen(8256);
 
 
-// io.on('connection', function (socket) {
-//     socket.on('join', function(data) {
-//         //console.log(data + "[server]");
-//         io.sockets.emit('reload', 'from io.on()');
-//     });
-// });
+io.on('connection', function (socket) {
+    //console.log("connection[server]");
+
+    socket.on('join', function(data) {
+        console.log(data + "join[server]");
+        //io.sockets.emit('reload', 'from io.on()');
+    });
+
+    socket.on('message', function(noteQuery) {
+        console.log("message got[server]");
+        var adr = "http://example.com/index.html" + noteQuery;
+        var q = url.parse(adr, true);
+        var query = q.query;
+        var msg = query.note;
+        var title = query.title;
+        fs.appendFile("public/notes.html", "<div class='col-md-3 col-sm-6 col-xs-12 top-mar-20'><h1>" + title + "</h1><p class='text-justify'>" + msg + "</p><a class='btn btn-success btn-lg btn-block' href='#'>Edit KEEP</a></div>\n", function (error) {
+            if(error) {
+                throw error;
+            }
+        });
+    });
+});
 
 fs.watchFile('public/notes.html', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
     console.log("notes.html changed.");
 });
-
-// var watch = require('node-watch');
-// watch('public/', );
