@@ -1,40 +1,21 @@
 var socket;
+
 if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) { //test for Firefox/x.x     or Firefox x.x (ignoring remaining digits);
     socket = new io.Socket({transports:['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']});
 } else {
-    socket = io();
+    socket = io();//for all browsers, other than Firefox.
 }
 
 $(window).load(function() {
-    var button = document.getElementById("save-button");
-    button.addEventListener("click", function () {
-    sendMsg();
-    //alert('ff');
-    });
-    
-    $(window).on('beforeunload', function(){
-        socket.close();
-    });
-});
-
-$(window).on('beforeunload', function(){
-        socket.close();
-});
-
-function sendMsg() {
-    var title = document.getElementById("title-text").value;
-    var note = document.getElementById("note-text").value;
-    //var noteQuery = "?title=" + title.value + "&note=" + note.value;
-    var noteQuery = {
-        _title: title,
-        _note: note
-    };
-    //alert(noteQuery._note);
-
-    //socket.emit('message', noteQuery);
-    //socket.on('connect', function () {
-        //alert(noteQuery);
+    $("#save-btn").on("click", function () {//get the title and note text and send it off via socket, when this save-btn is clicked.
+        var noteQuery = {//a wrapper to store the title and the note text.
+            title: document.getElementById("title-text").value,
+            note: document.getElementById("note-text").value
+        };
         socket.emit('message', noteQuery);
-    //});
-    //alert("outside" + noteQuery);
-}
+    });
+
+    $(window).on('beforeunload', function(){//trying to fix on Firefox, not fixed as of now.
+        socket.close();
+    });
+});
