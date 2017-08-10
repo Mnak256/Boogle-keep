@@ -22,10 +22,15 @@ $(window).on('beforeunload', function(){
 });
 
 function sendMsg() {
-    var title = document.getElementById("title-text");
-    var note = document.getElementById("note-text");
-    var noteQuery = "?title=" + title.value + "&note=" + note.value;
-    
+    var title = document.getElementById("title-text").value;
+    var note = document.getElementById("note-text").value;
+    //var noteQuery = "?title=" + title.value + "&note=" + note.value;
+    var noteQuery = {
+        _title: title,
+        _note: note
+    };
+    //alert(noteQuery._note);
+
     //socket.emit('message', noteQuery);
     //socket.on('connect', function () {
         //alert(noteQuery);

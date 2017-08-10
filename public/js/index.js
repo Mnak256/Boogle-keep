@@ -6,9 +6,10 @@ if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) { //test for Firefox/x.
 }
 
 
-function addNode(msg) {
+function addNode(msg) {//never used.
     $("#notes-container").append("<div class='col-md-3 col-sm-6 col-xs-12 top-mar-20'><h1>Test</h1><p class='text-justify'>" + msg + "</p><a class='btn btn-success btn-lg btn-block' href='#'>Edit KEEP</a></div>");
 }
+
 $("#notes-container").load("notes.html");
 
 $(window).load(function(){
@@ -24,6 +25,15 @@ $(window).load(function(){
         socket.close();
     });
 
+    /*$(document).on('click', '.edit-btn', function (event) {
+        var editObj = {
+            index: $(this).parent().attr('index'),
+            title: $(this).siblings('#title').html(),
+            note: $(this).siblings('#note').html()
+        }
+        socket.emit('edit', editObj);
+        location.replace('editMemo.html');
+    });*/
     
 });
 
