@@ -38,6 +38,20 @@ fs.watchFile('public/notes.html', { persistent: true, interval: 500 }, function 
     console.log("notes.html changed.");
 });
 
+//for Dev. purpose only, just to refresh browser window.
+fs.watchFile('public/index.html', { persistent: true, interval: 500 }, function (curr, prev) {
+    io.sockets.emit('reload', 'from watchFile()');
+    console.log(index++ + " : Browser Refreshed.");
+});
+fs.watchFile('public/index.css', { persistent: true, interval: 500 }, function (curr, prev) {
+    io.sockets.emit('reload', 'from watchFile()');
+    console.log(index++ + " : Browser Refreshed.");
+});
+fs.watchFile('public/index.js', { persistent: true, interval: 500 }, function (curr, prev) {
+    io.sockets.emit('reload', 'from watchFile()');
+    console.log(index++ + " : Browser Refreshed.");
+});
+
 /* helper functions - */
 
 function replaceHtmlTags(str) {
