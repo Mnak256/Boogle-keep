@@ -89,8 +89,8 @@ fs.watchFile('public/notes.html', { persistent: true, interval: 500 }, function 
 });
 
 function replaceHtmlTags(str) {
+    str = str.replace(/&/g, "&amp");
     str = str.replace(/</g, "&lt");
     str = str.replace(/>/g, "&gt");
-    str = str.replace(/&/g, '&amp');
     return str;
 }
