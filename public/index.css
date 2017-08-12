@@ -39,7 +39,7 @@ body {
   color: rgb(232, 232, 232);
 }
 #newNote-modal {
-  display: block;
+  display: none;
   position: fixed;
   background-color: rgba(40, 40, 40, 0.89);
   z-index: 1;
