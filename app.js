@@ -9,23 +9,32 @@ app.use(express.static('public'));
 var server = app.listen(8256);
 const io = require('socket.io').listen(server);
 
-var index = 0;//unique ID of each note, saved in the attribute 'index' of the wrapping div of each note.
-
 io.on('connection', function (socket) {
-    socket.on('join', function(data) {
-        console.log(data + "join[server]");
+    socket.on('join', function(data) { //on reload or new client join, pass the json file to that client to load it into the html.
+        var noteJson = fs.readFileSync('public/notes.json');
+        var jsonContent = JSON.parse(noteJson);
+        socket.emit('load', jsonContent);
     });
 
-    socket.on('message', function(noteQuery) {
-        var title = noteQuery.title;
-        var msg = noteQuery.note;
+    socket.on('message', function(noteObj) {
+        var title = noteObj.title;
+        var msg = noteObj.note;
 
         //making the user input as plain text, so that special characters are properly parsed.
         title = replaceHtmlTags(title);
         msg = replaceHtmlTags(msg);
 
-        //updating public/notes.html with new note.
-        fs.appendFile("public/notes.html", "<div index='" + index++ + "' class='col-md-3 col-sm-6 col-xs-12 top-mar-20'><h1 id='title'>" + title + "</h1><p id='note' class='text-justify'>" + msg + "</p><a class='btn btn-success btn-lg btn-block edit-btn'>Edit KEEP</a></div>\n", function (error) {
+        //making the json file.
+        var noteJson = fs.readFileSync('public/notes.json');
+        var jsonContent = JSON.parse(noteJson);
+        jsonContent.push({"title": title, "note": msg});
+        noteJson = JSON.stringify(jsonContent);
+
+        //reload all clients.
+        io.sockets.emit('reload');
+
+        //updating public/notes.json with new note.
+        fs.writeFile("public/notes.json", noteJson, function (error) {
             if(error) {
                 throw error;
             }
@@ -33,30 +42,28 @@ io.on('connection', function (socket) {
     });
 });
 
-fs.watchFile('public/notes.html', { persistent: true, interval: 500 }, function (curr, prev) {
-    io.sockets.emit('reload', 'from watchFile()');
-    console.log("notes.html changed.");
-});
+/*  only for automatic webpage refresh when developing.
 
-//for Dev. purpose only, just to refresh browser window.
+var i = 1;
 fs.watchFile('public/index.html', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
-    console.log(index++ + " : Browser Refreshed.");
+    console.log(i++ + " : Refreshed.");
 });
 fs.watchFile('public/index.css', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
-    console.log(index++ + " : Browser Refreshed.");
+    console.log(i++ + " : Refreshed.");
 });
 fs.watchFile('public/index.js', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
-    console.log(index++ + " : Browser Refreshed.");
+    console.log(i++ + " : Refreshed.");
 });
+*/
 
 /* helper functions - */
 
 function replaceHtmlTags(str) {
-    str = str.replace(/</g, "&lt");
-    str = str.replace(/>/g, "&gt");
     str = str.replace(/&/g, '&amp');
+    str = str.replace(/</g, '&lt');
+    str = str.replace(/>/g, '&gt');
     return str;
 }
