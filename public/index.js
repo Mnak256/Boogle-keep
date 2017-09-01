@@ -13,7 +13,7 @@ $(window).load(function(){
     socket.emit('join', 'mainak ');
     socket.on('load', function (data) { //loop througn all the notes and load them in the html.
         for (var i = 0; i < data.length; i++) {
-            $('.notes-container').append('<div class="note"><div class="note-title">' + data[i].title + '</div><div class="note-text">' + data[i].note + '</div><div class="btn edit-btn">Edit&nbsp;Note</div></div>');
+            $('.notes-container').append('<div class="note"><div class="note-title">' + data[i].title + '</div><div class="note-text">' + data[i].note + '</div><div style="display:flex"><div class="btn edit-btn">Edit</div><div class="btn delete-btn edit-btn">Delete</div></div></div>');
         }
     });
 
@@ -36,7 +36,7 @@ $(window).load(function(){
         if (note.length == 0 || title.length == 0) { //if any of the inputs is blank, then hide the modal window and show the error toast.
             hideModalWindow();
             showToast('Invalid Inputs');
-            return; //return here, so that blank inputs do not get sent to the server, or appended to this page.
+            return; //return, so that blank inputs do not get sent to the server, or appended to this page.
         }
 
         //show note locally.
@@ -55,7 +55,7 @@ $(window).load(function(){
 
 //helper functions:
 function getNoteHtml(note, title) {
-    return '<div class="note"><div class="note-title">' + title + '</div><div class="note-text">' + note + '</div><div class="btn edit-btn">Edit&nbsp;Note</div></div>';
+    return '<div class="note"><div class="note-title">' + title + '</div><div class="note-text">' + note + '</div><div class="btn edit-btn">Edit&nbsp;Note</div><div class="btn delete-btn edit-btn">Deleta&nbsp;Note</div></div>';
 }
 
 function hideModalWindow() {
