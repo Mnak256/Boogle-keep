@@ -134,6 +134,12 @@ body {
   margin: 5px auto 5px auto;
   width: 40%;
 }
+.notes-container .note  .delete-btn {
+  font-size: 1em;
+  padding: 2px 0 2px 0;
+  margin: 5px auto 5px auto;
+  width: 40%;
+}
 #toast {
   display: none;
   position: absolute;

@@ -13,7 +13,8 @@ $(window).load(function(){
     socket.emit('join', 'mainak ');
     socket.on('load', function (data) { //loop througn all the notes and load them in the html.
         for (var i = 0; i < data.length; i++) {
-            $('.notes-container').append('<div class="note"><div class="note-title">' + data[i].title + '</div><div class="note-text">' + data[i].note + '</div><div style="display:flex"><div class="btn edit-btn">Edit</div><div class="btn delete-btn edit-btn">Delete</div></div></div>');
+            //should use getNoteHtml()
+            $('.notes-container').append(getNoteHtml(data[i].note, data[i].title));
         }
     });
 
@@ -51,11 +52,19 @@ $(window).load(function(){
         
         hideModalWindow();
     });
+
+    $('body').on('click', '.delete-btn', function () {
+        //send delete request to server.
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+        //hide immediately from client side.
+        $(this).parent().parent().css('display', 'none');
+    });
 });
 
 //helper functions:
 function getNoteHtml(note, title) {
-    return '<div class="note"><div class="note-title">' + title + '</div><div class="note-text">' + note + '</div><div class="btn edit-btn">Edit&nbsp;Note</div><div class="btn delete-btn edit-btn">Deleta&nbsp;Note</div></div>';
+    return '<div class="note"><div class="note-title">' + title + '</div><div class="note-text">' + note + '</div><div style="display:flex"><div class="btn edit-btn">Edit</div><div class="btn delete-btn">Delete</div></div></div>';
 }
 
 function hideModalWindow() {
