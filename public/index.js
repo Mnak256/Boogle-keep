@@ -9,17 +9,26 @@ if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) { //test for Firefox/x.
     socket = io();//for all browsers, other than Firefox.
 }
 
+
+//$('.note').innerHTML = "";
+//console.log($('.note'));
+
+
+
 $(window).load(function(){
     socket.emit('join', 'mainak ');
     socket.on('load', function (data) { //loop througn all the notes and load them in the html.
-        for (var i = 0; i < data.length; i++) {
-            //should use getNoteHtml()
-            $('.notes-container').append(getNoteHtml(data[i].note, data[i].title));
+        var i;
+        for (i = 0; i < data.length; i++) {
+            $('.notes-container').prepend(getNoteHtml(data[i].note, data[i].title));
         }
     });
 
-    socket.on('reload', function (msg) {
-        location.reload(true);//reload the index.html page when the server tells to reload.
+    socket.on('reload', function (noteObj) {
+        $('html,body').scrollTop(0); //go to the top of this page such that the toast is visible.
+
+        showToast('Other Cliend Updated.', 'rgb(68,114,167)');
+        $('.notes-container').prepend(getNoteHtml(noteObj.note, noteObj.title));
     });
 
     $('#addNewNote-btn').on('click', function () {
@@ -36,12 +45,12 @@ $(window).load(function(){
         var title = $('#title-input').val();
         if (note.length == 0 || title.length == 0) { //if any of the inputs is blank, then hide the modal window and show the error toast.
             hideModalWindow();
-            showToast('Invalid Inputs');
+            showToast('Invalid Inputs', 'rgb(195, 44, 44)');
             return; //return, so that blank inputs do not get sent to the server, or appended to this page.
         }
 
-        //show note locally.
-        $('.notes-container').append(getNoteHtml(replaceHtmlTags(note), replaceHtmlTags(title)));
+        //show note locally, in case server is unavailable.
+        $('.notes-container').prepend(getNoteHtml(replaceHtmlTags(note), replaceHtmlTags(title))); //parsing user inputs properly before rendering them.
 
         //send note to server
         var noteObj = {
@@ -83,10 +92,15 @@ function showModalWindow() {
     $('body').css('overflow', 'hidden');//making page un-scrollable when modal window is open.
 }
 
-function showToast(msg) {
+function showToast(msg, color) {
+/*
+error toasts and other client updated toasts are co-insiding. NOT FIXED.
+*/
+
     $('#toast').html(msg);
-    $('body').css('overflow', 'hidden');
+    //$('body').css('overflow', 'hidden');
     $('#toast').css('display', 'block');
+    $('#toast').css('background-color', color);
     $('#toast').css('animation-name', 'toast-show-animation');
     setTimeout(function() {
         $('body').css('overflow', 'auto');

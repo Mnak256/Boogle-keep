@@ -1,4 +1,5 @@
 var express = require('express');
+var mysql = require('mysql');
 var app = express();
 var http = require('http');
 var url = require('url');
@@ -9,11 +10,30 @@ app.use(express.static('public'));
 var server = app.listen(8256);
 const io = require('socket.io').listen(server);
 
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '@Override',
+    database: 'booglekeep'
+});
+connection.connect();
+
+var noteJson = [];
+
 io.on('connection', function (socket) {
-    socket.on('join', function(data) { //on reload or new client join, pass the json file to that client to load it into the html.
-        var noteJson = fs.readFileSync('public/notes.json');
-        var jsonContent = JSON.parse(noteJson);
-        socket.emit('load', jsonContent);
+    socket.on('join', function(data) { //on reload or new client join, make an object array(noteJson) with all the notes and pass it to the client.
+        let sqlQuery = 'SELECT * FROM notes';
+        connection.query(sqlQuery, function (err, rows, fields) {
+            if (err) {
+                console.log('SQL Error.');
+                throw err;
+            }
+            for (var i = 0; i < rows.length; i++) {
+                noteJson.push({'title': rows[i].title, 'note': rows[i].note});
+            }
+            socket.emit('load', noteJson);
+            noteJson.length = 0;
+        });
     });
 
     socket.on('message', function(noteObj) {
@@ -24,21 +44,28 @@ io.on('connection', function (socket) {
         title = replaceHtmlTags(title);
         msg = replaceHtmlTags(msg);
 
-        //making the json file.
-        var noteJson = fs.readFileSync('public/notes.json');
-        var jsonContent = JSON.parse(noteJson);
-        jsonContent.push({"title": title, "note": msg});
-        noteJson = JSON.stringify(jsonContent);
-
-        //reload all clients.
-        io.sockets.emit('reload');
-
-        //updating public/notes.json with new note.
-        fs.writeFile("public/notes.json", noteJson, function (error) {
-            if(error) {
-                throw error;
+        //storing to DB.
+        let sqlQuery = 'INSERT INTO notes (title, note) VALUES ("' + title + '", "' + msg + '")';
+        connection.query(sqlQuery, function (err) {
+            if (err) {
+                console.log('Query Error');
             }
         });
+        /*connection.query('INSERT INTO notes (title, note) VALUES ("mainak", "dutta")', function (err, rows, fields) {
+            if (err) {
+                console.log('Query Error.');
+            } else {
+                console.log('Query Success.', rows);
+            }
+        });*/
+
+        //recreating duplicate noteObj, such that specal characters are properly parsed in the new object.
+        var noteObj_dup = {
+            'title': title,
+            'note': msg
+        };
+        //reload all clients.
+        socket.broadcast.emit('reload', noteObj_dup);
     });
 });
 
