@@ -25,14 +25,14 @@ io.on('connection', function (socket) {
         let sqlQuery = 'SELECT * FROM notes';
         connection.query(sqlQuery, function (err, rows, fields) {
             if (err) {
-                console.log('SQL Error.');
+                console.log('SQL Error while loading the notes');
                 throw err;
             }
             for (var i = 0; i < rows.length; i++) {
-                noteJson.push({'title': rows[i].title, 'note': rows[i].note});
+                noteJson.push({'id': rows[i].ID, 'title': rows[i].title, 'note': rows[i].note});
             }
             socket.emit('load', noteJson);
-            noteJson.length = 0;
+            noteJson.length = 0;//clearing the noteJson object so that other clients or same client refreshes do not get repeated items.
         });
     });
 
@@ -46,26 +46,32 @@ io.on('connection', function (socket) {
 
         //storing to DB.
         let sqlQuery = 'INSERT INTO notes (title, note) VALUES ("' + title + '", "' + msg + '")';
+        connection.query(sqlQuery, function (err, result) {
+            if (err) {
+                console.log('Query Error while adding new note');
+            }
+            //recreating duplicate noteObj, such that specal characters are properly parsed in the new object.
+            var noteObj_dup = {
+                'id': result.insertId,
+                'title': title,
+                'note': msg
+            };
+            //update all clients, except the sender of the note.(sender's update is being handled by the sender itself)
+            socket.broadcast.emit('reload', noteObj_dup);
+            //send the note ID to the sender only.
+            socket.emit('id', noteObj_dup.id);
+        });
+    });
+
+    socket.on('delete', function(noteId) {
+        let sqlQuery = 'DELETE FROM notes WHERE ID = ' + noteId;
         connection.query(sqlQuery, function (err) {
             if (err) {
-                console.log('Query Error');
+                console.log('Query Error while deleting note with ID = ' + noteId);
             }
+            //update all clients, except the sender of the note.(sender's update is being handled by the sender itself)
+            socket.broadcast.emit('reload', noteId);
         });
-        /*connection.query('INSERT INTO notes (title, note) VALUES ("mainak", "dutta")', function (err, rows, fields) {
-            if (err) {
-                console.log('Query Error.');
-            } else {
-                console.log('Query Success.', rows);
-            }
-        });*/
-
-        //recreating duplicate noteObj, such that specal characters are properly parsed in the new object.
-        var noteObj_dup = {
-            'title': title,
-            'note': msg
-        };
-        //reload all clients.
-        socket.broadcast.emit('reload', noteObj_dup);
     });
 });
 
