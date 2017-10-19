@@ -4,3 +4,47 @@ body {
 .nav-wrapper {
     padding-left: 10px;
 }
+.toggle-btn { /*this is not a materialize style */
+    width: 70px;
+}
+.toggle-btn div {
+    margin: auto;
+    background-color: rgb(167, 167, 167);
+    width: 40px;
+    height: 13px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.toggle-btn div div {
+    position: relative;
+    background-color: rgba(128, 128, 128, 0.7);
+    width: 24px;
+    height: 24px;
+    top: -6px;
+    left: -12px;
+    border-radius: 50%;
+    transition: 0.1s;
+}
+#feedback {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    top: -20px;
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(128, 128, 128, 0.863);
+    border-radius: 50%;
+    z-index: 1000;/* needs to be more than 995 to be on top of navbar */
+    transition: 0.2s;
+    animation-duration: 0.2s;
+} @keyframes feedback-anim {
+    from {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(1.8, 1.8);
+        opacity: 0.1;
+    }
+}
