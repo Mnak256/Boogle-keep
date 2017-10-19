@@ -6,7 +6,8 @@ var url = require('url');
 var path = require('path');
 var fs = require('fs');
 var expressWs = require('express-ws')(app);
-app.use(express.static('public'));
+// app.use(express.static('public'));
+app.use(express.static('public/materialize'));
 var server = app.listen(8256);
 const io = require('socket.io').listen(server);
 
@@ -75,22 +76,22 @@ io.on('connection', function (socket) {
     });
 });
 
-/*  only for automatic webpage refresh when developing.
+//   only for automatic webpage refresh when developing.
 
 var i = 1;
-fs.watchFile('public/index.html', { persistent: true, interval: 500 }, function (curr, prev) {
+fs.watchFile('public/materialize/index.html', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
     console.log(i++ + " : Refreshed.");
 });
-fs.watchFile('public/index.css', { persistent: true, interval: 500 }, function (curr, prev) {
+fs.watchFile('public/materialize/css/index.css', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
     console.log(i++ + " : Refreshed.");
 });
-fs.watchFile('public/index.js', { persistent: true, interval: 500 }, function (curr, prev) {
+fs.watchFile('public/materialize/js/index.js', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
     console.log(i++ + " : Refreshed.");
 });
-*/
+
 
 /* helper functions - */
 

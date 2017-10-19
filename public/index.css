@@ -12,14 +12,12 @@ body {
   color: rgb(201, 202, 229);
   text-align: center;
 }
-#label {
-  font-family: 'Gloria Hallelujah';
-  color: rgb(147, 155, 190);
-  font-size: 2.5em;
-  width: 100%;
+.label {
+  font-family: 'Chivo';
+  font-size: 1.5em;
   text-align: center;
+  margin: 8px;
 }
-
 .btn {
   font-size: 1.7em;
   user-select: none;
@@ -36,7 +34,6 @@ body {
   color: rgb(232, 232, 232);
   box-shadow: inset 0 0 0 3px rgb(62, 66, 81);
 }
-
 #newNote-modal {
   display: none;
   position: fixed;
@@ -105,40 +102,56 @@ body {
   padding: 10px 0 10px 0;
 }
 .notes-container .note {
-  float: left;
-  background-color: rgb(58, 60, 83);
-  margin: 8px 8px 11px 8px;
+  /* background-color: rgb(58, 60, 83); */
+  background-color: rgb(30, 28, 40);
+  margin: 8px auto 20px auto;
   padding-right: 5px;
   padding-left: 5px;
-  text-align: center;
   min-width: 200px;
-  max-width: 500px;
-  box-shadow: 0px 5px 10px rgb(190, 197, 221);
+  max-width: 70%;
+  box-shadow: 0px 0px 10px rgb(190, 197, 221);
   border-radius: 0 0 5px 5px;
 }
 .notes-container .note .note-title {
+  margin-bottom: 5px;
+  position: relative;
+  top: 3px;
   font-family: 'Chivo';
+  text-align: center;
   color: rgb(255, 255, 255);
   background-color: #4B6B77;
-  border-radius: 2px 2px 8px 8px;
+  border-radius: 0px 0px 8px 8px;
   font-size: 1.7em;
 }
 .notes-container .note .note-text {
+  margin: auto 10px auto 10px;
   font-family: 'Metrophobic';
   color: rgb(255, 255, 255);
   font-size: 1.2em;
+}
+.notes-container .note .note-controls {
+  background-color: rgb(30, 30, 60);
+  border-radius: 10px;
+  width: 50%;
+  margin: auto;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
 }
 .notes-container .note  .edit-btn {
   font-size: 1em;
   padding: 2px 0 2px 0;
   margin: 5px auto 5px auto;
-  width: 40%;
+  width: 100%;
+  max-width: 100px;
 }
 .notes-container .note  .delete-btn {
   font-size: 1em;
   padding: 2px 0 2px 0;
   margin: 5px auto 5px auto;
-  width: 40%;
+  width: 100%;
+  max-width: 100px;
 }
 #toast {
   display: none;
@@ -178,8 +191,11 @@ body {
     margin: 0 13% 0 13%;
     font-size: 2em;
   }
-  #label {
-    font-size: 1.8em;
+  #login-modal {
+    width: 85%;
+  }
+  #login-modal input {
+    width: 50%;
   }
   #addNewNote-btn {
     font-size: 1.4em;
@@ -201,5 +217,11 @@ body {
   }
   .notes-container {
     margin: 0 5px 0 5px;
+  }
+}
+
+@media only screen and (max-width: 542px) {
+  #login-modal input {
+    width: 85%;
   }
 }

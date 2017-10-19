@@ -30,7 +30,14 @@ $(window).load(function(){
         //if control comes here, then noteObj stores an object which is the new note that was added in another client.
         $('.notes-container').prepend(getNoteHtml(noteObj.id, noteObj.note, noteObj.title));
         showToast('Other client added new Note.', 'rgb(68,114,167)');
+        console.log('received');
     });
+
+
+//   only for automatic webpage refresh when developing.
+    // socket.on('reload', function (foo) {
+    //     location.reload(true);
+    // });
 
     socket.on('id', function (id) {
         $('.note:first-child').attr('id', id);
@@ -77,7 +84,7 @@ $(window).load(function(){
 
 //helper functions:
 function getNoteHtml(id, note, title) {
-    return '<div class="note" id="' + id + '"><div class="note-title">' + title + '</div><div class="note-text">' + note + '</div><div style="display:flex"><div class="btn edit-btn">Edit</div><div class="btn delete-btn">Delete</div></div></div>';
+    return '<div class="note" id="' + id + '"><div class="note-title">' + title + '</div><div class="note-text">' + note + '</div><div class="note-controls"><div class="btn edit-btn">Edit</div><div class="btn delete-btn">Delete</div></div></div>';
 }
 
 function hideModalWindow() {
