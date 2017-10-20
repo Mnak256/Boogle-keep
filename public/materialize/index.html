@@ -7,6 +7,8 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/index.css"/>
 
+    <link type="text/css" rel="stylesheet" href="css/login.css"/>
+
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
@@ -49,6 +51,10 @@
         <div class="divider"></div>
         <li><a class="grey lighten-2 hoverable" href="#">Another About</a></li>
     </ul>
+
+    <div id="particles-js"></div>
+
+
     <div id="new-note-modal" class="modal">
             <div class="modal-content">
                 <form>
@@ -80,6 +86,7 @@
         
     </div>
 
+
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -95,6 +102,19 @@
 
     <!--index.js-->
     <script type="text/javascript" src="js/index.js"></script>
+
+    <!--login.js-->
+    <script type="text/javascript" src="js/login.js"></script>
+
+    <!--Include particle library-->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!--Init JSON file for particles-->
+    <script >
+        particlesJS.load('particles-js', 'particlesjs-config.json', function() {
+        console.log('particlesjs-config.JSON is loaded!');
+        });
+    </script>
     
   </body>
 </html>
