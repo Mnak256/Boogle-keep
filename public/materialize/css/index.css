@@ -1,29 +1,47 @@
 body {
-    background-color: rgb(190, 190, 190);
+    background-color: #bdbdbd;
 }
 .nav-wrapper {
     padding-left: 10px;
 }
-.toggle-btn { /*this is not a materialize style */
-    width: 70px;
+.switch label {
+    font-size: medium;
+    font-style: bold;
+    color: rgb(36, 36, 36);
 }
-.toggle-btn div {
-    margin: auto;
-    background-color: rgb(167, 167, 167);
-    width: 40px;
-    height: 13px;
-    border-radius: 10px;
-    cursor: pointer;
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #494949;
 }
-.toggle-btn div div {
-    position: relative;
-    background-color: rgba(128, 128, 128, 0.7);
-    width: 24px;
-    height: 24px;
-    top: -6px;
-    left: -12px;
-    border-radius: 50%;
-    transition: 0.1s;
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #dadada;
+}
+#slide-out li ul li {
+    background-color: rgb(192, 192, 192);
+    margin-bottom: 1px;
+    transition: 0.1s ease;
+}
+#slide-out li a {
+    background-color: rgb(192, 192, 192);
+    margin-bottom: 1px;
+    transition: 0.1s ease;
+}
+#slide-out li ul li:hover {
+    background-color: rgb(145, 145, 145);
+}
+#slide-out li a:hover {
+    background-color: rgb(145, 145, 145);
+}
+.notes-container .note .card {
+    margin: 15px 5px;
+}
+.card .card-content a:first-of-type { /* shifting the edit button towards the right so that it doesnot overlap with the delete button */
+    right: 75px;
+}
+.card .card-content .divider {
+    margin-bottom: 8px;
+}
+#new-note-modal .modal-content form .input-field input {
+    cursor: url('cursor-text.png'), auto;
 }
 #feedback {
     display: none;
@@ -48,3 +66,4 @@ body {
         opacity: 0.1;
     }
 }
+

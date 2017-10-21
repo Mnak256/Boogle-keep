@@ -20,65 +20,65 @@
             </div>
         </nav>
     </div>
-<!-- side navBar in mobile -->
+
+    <!-- side navBar in mobile -->
     <ul id="slide-out" class="side-nav">
-        <li class="hoverable">
+        <li>
             <ul class="collapsible" data-collapsible="accordion">
                 <li>
                     <div class="collapsible-header"><i class="material-icons">keyboard_arrow_down</i>Settings
                     </div>
                     <div class="collapsible-body">
-                        <span id="dark-theme-settings-item" class="row">
-                            <div class="col s6">Dark&nbsp;Theme
-                            </div>
-                            <div class="col s6">
-                                <div class="toggle-btn valign-wrapper">
-                                    &nbsp;
-                                    <div>
-                                        <div>&nbsp;</div>
-                                    </div>
-                                </div>
+                        <span id="dark-theme-settings-item">
+                            <div class="switch center">
+                                <label>
+                                  Dark Theme
+                                  <input id="dark-theme-checkbox" type="checkbox">
+                                  <span class="lever"></span>
+                                </label>
                             </div>
                         </span>
                     </div>
                 </li>
             </ul>
         </li>
-        <div class="divider"></div>
-        <li><a class="grey lighten-2 hoverable" href="#">About</a></li>
-        <div class="divider"></div>
-        <li><a class="grey lighten-2 hoverable" href="#">Another About</a></li>
+        <li><a href="#">About</a></li>
+        <!-- <div class="divider"></div> -->
+        <li><a href="#">Another About</a></li>
     </ul>
+
+    <!-- new note modal -->
     <div id="new-note-modal" class="modal">
             <div class="modal-content">
                 <form>
                     <div class="input-field">
-                        <input type="text">
-                        <label for="text">Title</label>
+                        <input id="title-input" type="text">
+                        <label id="title-lable" for="text">Title</label>
                     </div>
                     <div class="input-field">
-                        <input type="text">
+                        <input id="note-input" type="text">
                         <label for="text">Note</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect grey btn-flat">save</a>
+                <a href="#!" id="save-btn" class="modal-action modal-close btn waves-effect grey darken-2">save</a>
             </div>
         </div>
     </div>
 
-    <!-- button to add new note -->
+    <!-- button to open new-note-modal -->
     <div class="fixed-action-btn">
-        <div id="add-new-post-btn" class="btn-floating btn-large modal-trigger waves-effect waves-light grey darken-2" href="#new-note-modal">
+        <div id="add-new-post-btn" class="btn-floating btn-large modal-trigger waves-effect waves-light grey darken-4" href="#new-note-modal">
             <i class="material-icons">add</i>
         </div>
     </div>
 
-    <!-- interact feedback mechanism -->
-    <div id="feedback">
-        
-    </div>
+    <!-- notes -->
+    <div class="notes-container row"></div>
+
+    <!-- interact feedback mechanism mainly for dark theme toggle -->
+    <div id="feedback"></div>
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
