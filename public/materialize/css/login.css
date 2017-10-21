@@ -6,3 +6,16 @@ body {
     padding-left: 10px;
 }
 
+#log {
+	float: right;
+	margin-top: 20px;
+	margin-right:10px; 
+	background: transparent;
+}
+
+#sign {
+	float: right;
+	margin-top: 20px; 
+	margin-right:20px;
+}
+
