@@ -58,9 +58,51 @@
     </ul>
     
 
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <form>
+                    <div class="input-field">
+                        <input type="email">
+                        <label for="email">Email ID</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="text">
+                        <label for="name">User Name</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password">
+                        <label for="password">Password</label>
+                    </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Sign Up</a>
+        </div>
+    </div>  
+
+    <!-- Modal Structure -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+                <form>
+                    <div class="input-field">
+                        <input type="text">
+                        <label for="name">User Name</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password">
+                        <label for="password">Password</label>
+                    </div>
+                </form>
+         </div>
+         <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Log In</a>
+        </div>
+    </div>         
+          
     <div id="particles-js">
-              <a id="log" class="waves-effect waves-light grey btn-flat" href="#">Log In</a>
-              <a id="sign" class="waves-effect waves-light grey btn-flat" href="#">Sign Up</a>
+              <a id="log" class="waves-effect waves-light btn modal-trigger grey" href="#modal2">Log In</a>
+              <a id="sign" class="waves-effect waves-light btn modal-trigger grey" href="#modal1">Sign Up</a>
     </div>
 
     <!--Import jQuery before materialize.js-->
@@ -80,6 +122,18 @@
     <script >
         particlesJS.load('particles-js', 'particlesjs-config.json', function() {
         console.log('particlesjs-config.JSON is loaded!');
+        });
+
+        $(document).ready(function(){
+                // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+                $('.modal').modal({
+                          dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                          opacity: 0.0, // Opacity of modal background
+                          inDuration: 300, // Transition in duration
+                          outDuration: 200, // Transition out duration
+                          startingTop: '25%', // Starting top style attribute
+                          endingTop: '25%' // Ending top style attribute
+               });
         });
     </script>
 
