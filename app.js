@@ -7,7 +7,8 @@ var path = require('path');
 var fs = require('fs');
 var expressWs = require('express-ws')(app);
 // app.use(express.static('public'));
-app.use(express.static('public/materialize', {index: 'login.html'}));
+// app.use(express.static('public/materialize', {index: 'login.html'}));
+app.use(express.static('public/materialize'));
 var server = app.listen(8256);
 const io = require('socket.io').listen(server);
 

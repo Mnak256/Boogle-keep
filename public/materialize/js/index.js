@@ -52,17 +52,17 @@ $(document).ready(function() {
 // helper functions
 function nightMode(bool) {
     if (bool) {
-        $('body').css('background-color', '#424242');
-        $('.notes-container .note .card').css('background-color', 'grey');
-        $('.notes-container .note .card').css('color', 'white');
+        // $('body').css('background-color', '#424242');
+        // $('.notes-container .note .card').css('background-color', 'grey');
+        // $('.notes-container .note .card').css('color', 'white');
         $('#slide-out').css('background-color', 'grey');
         $('.side-nav .collapsible-body').css('background-color', 'grey');
         $('#new-note-modal, #new-note-modal .modal-footer').css('background-color', 'grey');
         $('#new-note-modal .modal-content form .input-field label').css('color', 'white');
     } else {
-        $('body').css('background-color', '#bdbdbd');
-        $('.notes-container .note .card').css('background-color', 'white');
-        $('.notes-container .note .card').css('color', 'black');
+        // $('body').css('background-color', '#bdbdbd');
+        // $('.notes-container .note .card').css('background-color', 'white');
+        // $('.notes-container .note .card').css('color', 'black');
         $('#slide-out').css('background-color', 'white');
         $('.side-nav .collapsible-body').css('background-color', 'white');
         $('#new-note-modal, #new-note-modal .modal-footer').css('background-color', 'white');
@@ -71,15 +71,7 @@ function nightMode(bool) {
 }
 
 function getNoteHtml(id, title, note) {
-    var bgCol, txtCol;
-    if (darkTheme) {
-        bgCol = 'grey';
-        txtCol = 'white';
-    } else {
-        bgCol = 'white';
-        txtCol = 'black';
-    }
-    return '<div id="' + id + '" class="note col l3 m6 s12"><div class="card" style="background-color:' + bgCol + '; color:' + txtCol + ';"><div class="card-content"><div class="card-title">' + title + '</div><p>' + note + '</p><a href="#" class="btn-floating halfway-fab waves-effect waves-light grey darken-1"><i class="material-icons">edit</i></a><a href="#" class="delete-btn btn-floating halfway-fab waves-effect waves-light grey darken-1"><i class="material-icons">delete</i></a></div></div></div>';
+    return '<div id="' + id + '" class="note col l3 m6 s12"><div class="card"><div class="card-content"><div class="card-title">' + title + '</div><p>' + note + '</p><a href="#" class="btn-floating halfway-fab waves-effect waves-light grey darken-1"><i class="material-icons">edit</i></a><a href="#" class="delete-btn btn-floating halfway-fab waves-effect waves-light grey darken-1"><i class="material-icons">delete</i></a></div></div></div>';
 }
 
 function replaceHtmlTags(str) {
