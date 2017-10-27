@@ -3,7 +3,7 @@ body {
     background-color: black;
 }
 #particles-js {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -16,6 +16,13 @@ nav {
 .nav-wrapper {
     padding-left: 10px;
 }
+/* make the side-nav translucent */
+#slide-out {
+    background-color: rgba(0, 0, 0, 0);
+    height: auto;
+    /* overflow: hidden; */
+}
+/* change the background color of the dark mode switch */
 .switch label {
     font-size: medium;
     font-style: bold;

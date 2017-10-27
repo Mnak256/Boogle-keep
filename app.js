@@ -24,7 +24,7 @@ var noteJson = [];
 
 io.on('connection', function (socket) {
     socket.on('join', function(data) { //on reload or new client join, make an object array(noteJson) with all the notes and pass it to the client.
-        let sqlQuery = 'SELECT * FROM notes';
+        var sqlQuery = 'SELECT * FROM notes';
         connection.query(sqlQuery, function (err, rows, fields) {
             if (err) {
                 console.log('SQL Error while loading the notes');
@@ -47,7 +47,7 @@ io.on('connection', function (socket) {
         msg = replaceHtmlTags(msg);
 
         //storing to DB.
-        let sqlQuery = 'INSERT INTO notes (title, note) VALUES ("' + title + '", "' + msg + '")';
+        var sqlQuery = 'INSERT INTO notes (title, note) VALUES ("' + title + '", "' + msg + '")';
         connection.query(sqlQuery, function (err, result) {
             if (err) {
                 console.log('Query Error while adding new note');
@@ -65,8 +65,19 @@ io.on('connection', function (socket) {
         });
     });
 
+    socket.on('edit', function (noteObj) {
+        var sqlQuery = 'UPDATE notes SET title = "' + noteObj.title + '", note = "' + noteObj.note + '" WHERE ID = ' + noteObj.id;
+        connection.query(sqlQuery, function (err) {
+            if (err) {
+                console.log('Query Error while deleting note with ID = ' + noteObj.id);
+            }
+            //update all clients, except the sender of the note.(sender's update is being handled by the sender itself)
+            io.emit('reload', noteObj.id);
+        });
+    });
+
     socket.on('delete', function(noteId) {
-        let sqlQuery = 'DELETE FROM notes WHERE ID = ' + noteId;
+        var sqlQuery = 'DELETE FROM notes WHERE ID = ' + noteId;
         connection.query(sqlQuery, function (err) {
             if (err) {
                 console.log('Query Error while deleting note with ID = ' + noteId);
