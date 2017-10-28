@@ -16,21 +16,22 @@
 
   <body>
 
-
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper grey darken-2">
-                <div id="brand-name" class="brand-logo right">BOOgle KEeP</div>
+            <div class="nav-wrapper">
+                <div id="brand-name" class="brand-logo right">BOOgle KEEP</div>
                 <a href="#" id="collapse-hamburger-btn" class="left" data-activates="slide-out"><i class="material-icons">menu</i></a>
             </div>
         </nav>
     </div>
 
+    <div id="particles-js"></div>
+
 
 <!-- side navBar in mobile -->
     <ul id="slide-out" class="side-nav">
         <li class="hoverable">
-            <ul class="collapsible" data-collapsible="accordion">
+            <ul class="collapsible" data-collapsible="accordion"> 
                 <li>
                     <div class="collapsible-header"><i class="material-icons">keyboard_arrow_down</i>Settings
                     </div>
@@ -58,51 +59,51 @@
     </ul>
     
 
-    <!-- Modal Structure -->
+    <!-- Modal Structure for sign up-->
     <div id="modal1" class="modal">
         <div class="modal-content">
             <form>
                     <div class="input-field">
-                        <input type="email">
+                        <input id="email-input" type="email">
                         <label for="email">Email ID</label>
                     </div>
                     <div class="input-field">
-                        <input type="text">
-                        <label for="name">User Name</label>
+                        <input id="name-input" type="text">
+                        <label for="name">User Name</label> 
                     </div>
                     <div class="input-field">
-                        <input type="password">
+                        <input id="pwds-input" type="password">
                         <label for="password">Password</label>
                     </div>
             </form>
          </div>
          <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Sign Up</a>
+            <a id="signup" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Sign Up</a>
         </div>
     </div>  
 
-    <!-- Modal Structure -->
+    <!-- Modal Structure for log in -->
     <div id="modal2" class="modal">
         <div class="modal-content">
                 <form>
                     <div class="input-field">
-                        <input type="text">
+                        <input id="log-name" type="text">
                         <label for="name">User Name</label>
                     </div>
                     <div class="input-field">
-                        <input type="password">
+                        <input id="log-pwds" type="password">
                         <label for="password">Password</label>
                     </div>
                 </form>
          </div>
          <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Log In</a>
+            <a href="#!" id="login" class="modal-action modal-close waves-effect waves-green btn-flat">Log In</a>
         </div>
     </div>         
-          
-    <div id="particles-js">
-              <a id="log" class="waves-effect waves-light btn modal-trigger grey" href="#modal2">Log In</a>
-              <a id="sign" class="waves-effect waves-light btn modal-trigger grey" href="#modal1">Sign Up</a>
+
+    <div>
+            <a id="log" class="waves-effect waves-light btn modal-trigger grey" href="#modal2">Log In</a>
+            <a id="sign" class="waves-effect waves-light btn modal-trigger grey" href="#modal1">Sign Up</a>
     </div>
 
     <!--Import jQuery before materialize.js-->
