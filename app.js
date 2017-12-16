@@ -6,9 +6,7 @@ var url = require('url');
 var path = require('path');
 var fs = require('fs');
 var expressWs = require('express-ws')(app);
-// app.use(express.static('public'));
-// app.use(express.static('public/materialize', {index: 'login.html'}));
-app.use(express.static('public/materialize'));
+app.use(express.static('public/materialize', {index: 'login.html'}));
 var server = app.listen(8256);
 const io = require('socket.io').listen(server);
 
@@ -42,12 +40,11 @@ io.on('connection', function (socket) {
         var title = noteObj.title;
         var msg = noteObj.note;
 
-        //making the user input as plain text, so that special characters are properly parsed.
+        //making sure that the user input is plain text & that special characters are properly parsed.
         title = replaceHtmlTags(title);
         msg = replaceHtmlTags(msg);
-
         //storing to DB.
-        var sqlQuery = 'INSERT INTO notes (title, note) VALUES ("' + title + '", "' + msg + '")';
+        var sqlQuery = 'INSERT INTO notes (title, note) VALUES (' + connection.escape(title) + ', ' + connection.escape(msg) + ')';
         connection.query(sqlQuery, function (err, result) {
             if (err) {
                 console.log('Query Error while adding new note');
@@ -66,7 +63,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('edit', function (noteObj) {
-        var sqlQuery = 'UPDATE notes SET title = "' + noteObj.title + '", note = "' + noteObj.note + '" WHERE ID = ' + noteObj.id;
+        var sqlQuery = 'UPDATE notes SET title = ' + connection.escape(noteObj.title) + ', note = ' + connection.escape(noteObj.note) + ' WHERE ID = ' + connection.escape(noteObj.id);
         connection.query(sqlQuery, function (err) {
             if (err) {
                 console.log('Query Error while deleting note with ID = ' + noteObj.id);
@@ -77,7 +74,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('delete', function(noteId) {
-        var sqlQuery = 'DELETE FROM notes WHERE ID = ' + noteId;
+        var sqlQuery = 'DELETE FROM notes WHERE ID = ' + connection.escape(noteId);
         connection.query(sqlQuery, function (err) {
             if (err) {
                 console.log('Query Error while deleting note with ID = ' + noteId);
@@ -89,7 +86,7 @@ io.on('connection', function (socket) {
 });
 
 //   only for automatic webpage refresh when developing.
-
+/*
 var i = 1;
 fs.watchFile('public/materialize/index.html', { persistent: true, interval: 500 }, function (curr, prev) {
     io.sockets.emit('reload', 'from watchFile()');
@@ -103,7 +100,7 @@ fs.watchFile('public/materialize/js/index.js', { persistent: true, interval: 500
     io.sockets.emit('reload', 'from watchFile()');
     console.log(i++ + " : Refreshed.");
 });
-
+*/
 
 /* helper functions - */
 
